@@ -1,27 +1,37 @@
 const express = require('express');
 const morgan = require('morgan');
-const { engine } = require('express-handlebars')
-const path = require('path')
+const { engine } = require('express-handlebars');
+const path = require('path');
+
+const db = require('./config/db');
+
 const app = express();
 const port = 3000;
 
-// temple engine
-app.engine('.hbs', engine({extname: '.hbs'}));
-app.set('view engine', '.hbs');
-app.set('views', path.join(__dirname, 'resources/views'));
+const routes = require('./routes');
 
-app.use(express.static(path.join(__dirname, 'public')))
+//Connect to DB
+db.connect();
+//midleware
+app.use(
+    express.urlencoded({
+        extended: true,
+    }),
+);
+app.use(express.json());
+// temple engine
+app.engine('.hbs', engine({ extname: '.hbs' }));
+app.set('view engine', '.hbs');
+app.set('views', path.join(__dirname, 'resources', 'views'));
+
+app.use(express.static(path.join(__dirname, 'public')));
 // http logger
 app.use(morgan('combined'));
 
-app.get('/', (req, res) => {
-  res.render('home')
-})
+// route init
 
-app.get('/news', (req, res) => {
-  res.render('news')
-})
+routes(app);
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-})
+    console.log(`Example app listening on port ${port}`);
+});
