@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const { engine } = require('express-handlebars');
+const methodOverride = require('method-override');
 const path = require('path');
 
 const db = require('./config/db');
@@ -20,11 +21,20 @@ app.use(
 );
 app.use(express.json());
 // temple engine
-app.engine('.hbs', engine({ extname: '.hbs' }));
+app.engine(
+    '.hbs',
+    engine({
+        extname: '.hbs',
+        helpers: {
+            sum: (a, b) => a + b,
+        },
+    }),
+);
 app.set('view engine', '.hbs');
 app.set('views', path.join(__dirname, 'resources', 'views'));
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(methodOverride('_method'));
 // http logger
 app.use(morgan('combined'));
 

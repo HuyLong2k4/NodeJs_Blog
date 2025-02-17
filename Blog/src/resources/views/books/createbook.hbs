@@ -1,28 +1,49 @@
-<div class="mt-4">
-    <h4>Thêm truyện mới</h4>
-    <form method="POST" action="/courses/store">
-  <div class="mb-3">
-    <label for="name">Name</label>
-    <input type="text" class="form-control" id="name" name="name">
-  </div>
-  <div class="mb-3">
-    <label for="description">Description</label>
-    <input type="text" class="form-control" id="description" name="description">
-  </div>
-  <div class="">
-    <label for="description">Image</label>
-    <input type="text" class="form-control" id="image" name="image">
-  </div>
-  <div id="emailHelp" class="form-text mb-3">Vui lòng dán link ảnh.</div>
-  <div class="mb-3">
-    <label for="author">Author</label>
-    <input type="text" class="form-control" id="author" name="author">
-  </div>
-  <select class="form-select mb-3" aria-label="Default select example" name="status">
-  <option selected disabled>Trạng thái</option>
-  <option value="完成">完成</option>
-  <option value="未完成">未完成</option>
-</select>
-  <button type="submit" class="btn btn-primary">Thêm truyện</button>
-</form>
+<div class='mt-4'>
+    <h4>新しい漫画を追加</h4>
+    <form method='POST' action='/courses/store'>
+        <div class='mb-3'>
+            <label for='name'>Name</label>
+            <input type='text' class='form-control' id='name' name='name' />
+        </div>
+        <div class='mb-3'>
+            <label for='description'>Description</label>
+            <input
+                type='text'
+                class='form-control'
+                id='description'
+                name='description'
+            />
+        </div>
+        <div class=''>
+            <label for='description'>Image</label>
+            <input type='text' class='form-control' id='image' name='image' />
+        </div>
+        <div id='emailHelp' class='form-text mb-3'>Vui lòng dán link ảnh.</div>
+        <div class='mb-3'>
+            <label for='author'>Author</label>
+            <input type='text' class='form-control' id='author' name='author' />
+        </div>
+        <select
+            class='form-select mb-3'
+            aria-label='Default select example'
+            name='category'
+        >
+            <option selected disabled>Thể loại</option>
+            <option value='少女・女性向けまんが'>少女・女性向けまんが</option>
+            <option value='少年・青年向けまんが'>少年・青年向けまんが</option>
+            <option value='少年・青年向けまんが'>ハーレクイン</option>
+            <option value='少年・青年向けまんが'>ライトノベル（ラノベ）</option>
+            <option value='少年・青年向けまんが'>文芸・ビジネス・実用</option>
+        </select>
+        <select
+            class='form-select mb-3'
+            aria-label='Default select example'
+            name='status'
+        >
+            <option selected disabled>Trạng thái</option>
+            <option value='完成'>完成</option>
+            <option value='未完成'>未完成</option>
+        </select>
+        <button type='submit' class='btn btn-primary'>Thêm truyện</button>
+    </form>
 </div>

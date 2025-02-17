@@ -1,0 +1,96 @@
+<div class='mt-4'>
+    <h3>Sách của tôi</h3>
+
+    <table class='table'>
+        <thead>
+            <tr>
+                <th scope='col'>#</th>
+                <th scope='col'>Name</th>
+                <th scope='col'>Author</th>
+                <th scope='col'>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each courses}}
+                <tr>
+                    <th scope='row'>{{sum @index 1}}</th>
+                    <td>{{this.name}}</td>
+                    <td>{{this.author}}</td>
+                    <td>{{this.status}}</td>
+                    <td>
+                        <a href='/courses/{{this._id}}/edit' class='btn'>Sửa</a>
+                        <a
+                            class='btn btn-primary'
+                            data-bs-toggle='modal'
+                            data-id='{{this._id}}'
+                            data-bs-target='#deleteBookModal'
+                        >Xóa</a>
+                    </td>
+                </tr>
+
+            {{else}}
+
+                <tr>
+                    <td colspan='5' class='text-center'>
+                        Bạn chưa đăng truyện nào.
+                        <a href='http://localhost:3000/courses/create'>Thêm
+                            truyện</a>
+                    </td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal -->
+<div
+    class='modal fade'
+    id='deleteBookModal'
+    tabindex='-1'
+    aria-labelledby='deleteBookModalLabel'
+    aria-hidden='true'
+>
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <h1 class='modal-title fs-5' id='deleteBookModalLabel'>Bạn chắc
+                    chắn xóa truyện này chứ!?</h1>
+                <button
+                    type='button'
+                    class='btn-close'
+                    data-bs-dismiss='modal'
+                    aria-label='Close'
+                ></button>
+            </div>
+            <div class='modal-footer'>
+                <button
+                    type='button'
+                    class='btn btn-secondary'
+                    data-bs-dismiss='modal'
+                >Close</button>
+                <button
+                    type='button'
+                    class='btn btn-danger'
+                    id='delete-book'
+                >Accept</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{! Delete hidden form }}
+
+<form id='delete-hidden-form' method='POST'></form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() { var id; var
+    deleteModal = document.getElementById('deleteBookModal'); var
+    deleteHiddenForm = document.getElementById('delete-hidden-form');
+    deleteModal.addEventListener('show.bs.modal', function(event) { var button =
+    event.relatedTarget; if (button) { id = button.getAttribute('data-id');
+    console.log( id); } else { console.log('Không tìm thấy button kích hoạt
+    modal'); } }); var deleteBook = document.getElementById('delete-book');
+    deleteBook.onclick = function () { deleteHiddenForm.action = '/courses/' +
+    id + '?_method=DELETE' deleteHiddenForm.submit() } });
+</script>

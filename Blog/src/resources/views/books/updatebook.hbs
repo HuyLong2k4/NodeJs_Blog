@@ -1,0 +1,47 @@
+<div class='mt-4'>
+    <h4>Sửa lại chuyện</h4>
+    <form method='POST' action='/courses/{{course._id}}?_method=PUT'>
+        <div class='mb-3'>
+            <label for='name'>Name</label>
+            <input
+                type='text'
+                class='form-control'
+                value='{{course.name}}'
+                id='name'
+                name='name'
+            />
+        </div>
+        <div class='mb-3'>
+            <label for='description'>Description</label>
+            <input
+                type='text'
+                class='form-control'
+                value='{{course.description}}'
+                id='description'
+                name='description'
+            />
+        </div>
+        <div class=''>
+            <label for='description'>Image</label>
+            <input
+                type='text'
+                class='form-control'
+                value='{{course.image}}'
+                id='image'
+                name='image'
+            />
+        </div>
+        <div id='emailHelp' class='form-text mb-3'>Vui lòng dán link ảnh.</div>
+        <div class='mb-3'>
+            <label for='author'>Author</label>
+            <input
+                type='text'
+                class='form-control'
+                value='{{course.author}}'
+                id='author'
+                name='author'
+            />
+        </div>
+        <button type='submit' class='btn btn-primary'>Lưu lại</button>
+    </form>
+</div>

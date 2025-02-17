@@ -1,14 +1,14 @@
 const Course = require('../models/Course');
 const Category = require('../models/Category');
 
-class SiteController {
-    async index(req, res) {
+class ClientsController {
+    async storedBook(req, res) {
         try {
             var courses = await Course.find({});
             var categories = await Category.find({}).lean();
             // convert courses để có thể lấy dữ liệu trực tiếp từ moongo
             courses = courses.map((courses) => courses.toObject());
-            res.render('home', {
+            res.render('client/storedbook', {
                 courses,
                 categories,
             });
@@ -18,4 +18,4 @@ class SiteController {
     }
 }
 
-module.exports = new SiteController();
+module.exports = new ClientsController();
