@@ -1,5 +1,5 @@
 const Course = require('../models/Course');
-const Category = require('../models/Category');
+
 
 class CoursesController {
     async show(req, res) {

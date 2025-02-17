@@ -54,8 +54,8 @@
     <div class='modal-dialog'>
         <div class='modal-content'>
             <div class='modal-header'>
-                <h1 class='modal-title fs-5' id='deleteBookModalLabel'>Bạn chắc
-                    chắn xóa truyện này chứ!?</h1>
+                <h1 class='modal-title fs-5' id='deleteBookModalLabel'>Bạn chắc chắn muốn xóa truyện này!?
+                    </h1>
                 <button
                     type='button'
                     class='btn-close'
@@ -84,13 +84,25 @@
 <form id='delete-hidden-form' method='POST'></form>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() { var id; var
-    deleteModal = document.getElementById('deleteBookModal'); var
-    deleteHiddenForm = document.getElementById('delete-hidden-form');
-    deleteModal.addEventListener('show.bs.modal', function(event) { var button =
-    event.relatedTarget; if (button) { id = button.getAttribute('data-id');
-    console.log( id); } else { console.log('Không tìm thấy button kích hoạt
-    modal'); } }); var deleteBook = document.getElementById('delete-book');
-    deleteBook.onclick = function () { deleteHiddenForm.action = '/courses/' +
-    id + '?_method=DELETE' deleteHiddenForm.submit() } });
+    document.addEventListener('DOMContentLoaded', function() { 
+    var deleteModal = document.getElementById('deleteBookModal'); 
+    var deleteHiddenForm = document.getElementById('delete-hidden-form');
+
+    deleteModal.addEventListener('show.bs.modal', function(event) { 
+        var button = event.relatedTarget; 
+        if (button) { 
+            var id = button.getAttribute('data-id');
+            console.log(id); 
+
+            var deleteBook = document.getElementById('delete-book');
+            deleteBook.onclick = function () { 
+                deleteHiddenForm.action = '/courses/' + id + '?_method=DELETE';
+                deleteHiddenForm.submit();
+            };
+        } else { 
+            console.log('Không tìm thấy button kích hoạt modal'); 
+        } 
+    });
+});
+
 </script>
