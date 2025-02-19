@@ -20,8 +20,10 @@ class ClientsController {
         try {
             var courses = await Course.findDeleted({})
             courses = courses.map((courses) => courses.toObject());
+            var categories = await Category.find({}).lean();
             res.render('client/trash', {
-                courses
+                courses,
+                categories
             });
         } catch {
             res.status(400).json({ error: 'Error' });
