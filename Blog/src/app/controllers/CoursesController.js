@@ -1,21 +1,36 @@
 const Course = require('../models/Course');
+const Category = require('../models/Category');
 
 
 class CoursesController {
     async show(req, res) {
         try {
             var course = await Course.findOne({ slug: req.params.slug });
+            var categories = await Category.find({}).lean();
             if (!course) {
                 return res.status(404).send('Course not found');
             }
-            res.render('books/bookdetail', { course: course.toObject() });
+            res.render('books/bookdetail', { 
+                categories,
+                course: course.toObject() 
+                });
         } catch (err) {
             res.status(400).json({ error: 'Error' });
         }
     }
     // GET
-    create(req, res) {
-        res.render('books/createbook');
+    async create(req, res) {
+        try {
+            var categories = await Category.find({}).lean();
+            res.render('books/createbook', 
+                {
+                    categories
+                }
+            );
+        }
+        catch {
+            res.status(400).json({ error: 'Error' });
+        }
     }
     //POST
     async store(req, res) {
@@ -44,10 +59,17 @@ class CoursesController {
     }
 
     async destroy(req, res) {
-        Course.deleteOne({ _id: req.params.id })
+        Course.delete({ _id: req.params.id })
             .then(() => res.redirect('/client/stored/book'))
             .catch((err) => {});
     }
+
+    async restore(req, res) {
+        Course.restore({ _id: req.params.id })
+            .then(() => res.redirect('/client/trash'))
+            .catch((err) => {});
+    }
+   
 }
 
 module.exports = new CoursesController();

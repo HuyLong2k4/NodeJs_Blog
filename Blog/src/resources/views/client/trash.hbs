@@ -1,0 +1,156 @@
+<div class='mt-4'>
+    <a href="/client/stored/book">Quay lại</a>
+    <h3>Sách đã xóa</h3>
+
+    <table class='table'>
+        <thead>
+            <tr>
+                
+                <th scope='col'>Name</th>
+                <th scope='col'>Author</th>
+                <th scope='col'>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each courses }}
+                {{#if this.deletedAt}}
+                <tr>
+                    
+                    <td>{{this.name}}</td>
+                    <td>{{this.author}}</td>
+                    <td>{{this.status}}</td>
+                    <td>
+                        <a data-bs-toggle='modal' class='btn' data-id="{{this._id}}" data-bs-target='#restoreBookModal'>Khôi phục</a>
+                        <a
+                            class='btn btn-primary'
+                            data-bs-toggle='modal'
+                            data-id='{{this._id}}'
+                            data-bs-target='#deleteBookModal'
+                        >Xóa vĩnh viễn</a>
+                    </td>
+                </tr>
+                {{/if}}
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal -->
+<div
+    class='modal fade'
+    id='deleteBookModal'
+    tabindex='-1'
+    aria-labelledby='deleteBookModalLabel'
+    aria-hidden='true'
+>
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <h1 class='modal-title fs-5' id='deleteBookModalLabel'>Bạn chắc chắn muốn xóa truyện này!?
+                    </h1>
+                <button
+                    type='button'
+                    class='btn-close'
+                    data-bs-dismiss='modal'
+                    aria-label='Close'
+                ></button>
+            </div>
+            <div class='modal-footer'>
+                <button
+                    type='button'
+                    class='btn btn-secondary'
+                    data-bs-dismiss='modal'
+                >Close</button>
+                <button
+                    type='button'
+                    class='btn btn-danger'
+                    id='delete-book'
+                >Accept</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal restore-->
+<div
+    class='modal fade'
+    id='restoreBookModal'
+    tabindex='-1'
+    aria-labelledby='restoreBookModalLabel'
+    aria-hidden='true'
+>
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <h1 class='modal-title fs-5' id='restoreBookModalLabel'>Bạn chắc chắn muốn khôi phục truyện này!?
+                    </h1>
+                <button
+                    type='button'
+                    class='btn-close'
+                    data-bs-dismiss='modal'
+                    aria-label='Close'
+                ></button>
+            </div>
+            <div class='modal-footer'>
+                <button
+                    type='button'
+                    class='btn btn-secondary'
+                    data-bs-dismiss='modal'
+                >Close</button>
+                <button
+                    type='button'
+                    class='btn btn-danger'
+                    id='restore-book'
+                >Accept</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{! Delete hidden form }}
+
+<form id='delete-hidden-form' method='POST'></form>
+<form id='restore-hidden-form' method='POST'></form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() { 
+        var restoreModal = document.getElementById('restoreBookModal'); 
+        var restoreHiddenForm = document.getElementById('restore-hidden-form');
+        var deleteModal = document.getElementById('deleteBookModal'); 
+        var deleteHiddenForm = document.getElementById('delete-hidden-form');
+
+        deleteModal.addEventListener('show.bs.modal', function(event) { 
+            var button = event.relatedTarget; 
+            if (button) { 
+                var id = button.getAttribute('data-id');
+                console.log(id); 
+
+                var deleteBook = document.getElementById('delete-book');
+                deleteBook.onclick = function () { 
+                    deleteHiddenForm.action = '/courses/' + id + '?_method=DELETE';
+                    deleteHiddenForm.submit();
+                };
+            } else { 
+            console.log('Không tìm thấy button kích hoạt modal'); 
+            } 
+        });
+
+        restoreModal.addEventListener('show.bs.modal', function(event) { 
+            var button = event.relatedTarget; 
+            if (button) { 
+                var id = button.getAttribute('data-id');
+                console.log(id); 
+
+                var restoreBook = document.getElementById('restore-book');
+                restoreBook.onclick = function () { 
+                    restoreHiddenForm.action = '/courses/' + id + '/restore?_method=PATCH';
+                    restoreHiddenForm.submit();
+                };
+            } else { 
+                console.log('Không tìm thấy button kích hoạt modal'); 
+            } 
+        });
+    });
+
+</script>

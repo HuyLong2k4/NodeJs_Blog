@@ -6,8 +6,8 @@
   font-size: 40px;
   font-weight: 700; }
 
-.title-icon {
-  color: white; }
+.logo-title {
+  margin-right: 100px; }
 
 .nav-list {
   display: flex;
@@ -25,6 +25,13 @@
 .card-img-top {
   height: 300px;
   /* Điều chỉnh chiều cao của ảnh */
+  object-fit: cover;
+  /* Cắt ảnh để vừa khít */ }
+
+.card-avatar {
+  height: 34px;
+  width: 34px;
+  border-radius: 50%;
   object-fit: cover;
   /* Cắt ảnh để vừa khít */ }
 
